@@ -17,5 +17,9 @@ cabal-version:       >=1.8
 
 library
   -- exposed-modules:     
-  -- other-modules:       
+  other-modules:       Main
   build-depends:       base ==4.5.*
+                     , persistent-template
+                     , persistent-sqlite
+                     , persistent
+                     , text
