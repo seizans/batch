@@ -30,9 +30,14 @@ initNumPerAge = do
   where
     initialData = NumPerAge <$> [0, 20, 40, 60] <*> [Male, Female] <*> [0]
 
-main :: IO ()
-main = do
-    initDB
+execSqlite
+  :: SqlPersist IO a
+  -> IO a
+execSqlite = withSqliteConn dbn . runSqlConn
   where
     dbn = "batch.sqlite3"
-    initDB = withSqliteConn dbn $ runSqlConn $ runMigration migrateAll
+
+main :: IO ()
+main = execSqlite $ do
+    runMigration migrateAll
+    initNumPerAge
