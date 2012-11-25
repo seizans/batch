@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 import Control.Applicative
 import Database.Persist (Filter)
 import qualified Database.Persist as DB
