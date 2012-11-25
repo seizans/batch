@@ -28,7 +28,7 @@ initNumPerAge = do
     DB.deleteWhere ([] :: [Filter NumPerAge])
     mapM_ DB.insert initialData
   where
-    initialData = NumPerAge <$> [0, 20, 40, 60] <*> [Male, Female] <*> [0]
+    initialData = NumPerAge <$> [Over0, Over20, Over40, Over60] <*> [Male, Female] <*> [0]
 
 execSqlite
   :: SqlPersist IO a

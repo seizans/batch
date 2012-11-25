@@ -16,7 +16,7 @@ Person
   deriving Show
 
 NumPerAge
-    ageArea Int
+    ageArea AgeArea
     sex Sex
     number Int
   deriving Show
@@ -24,4 +24,9 @@ NumPerAge
 
 data Sex = Male | Female
   deriving (Show, Read, Eq, Ord, Enum, Bounded)
+
+data AgeArea = Over0 | Over20 | Over40 | Over60
+  deriving (Show, Read, Eq, Ord, Enum, Bounded)
+
 derivePersistField "Sex"
+derivePersistField "AgeArea"
