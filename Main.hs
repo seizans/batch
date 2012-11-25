@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 import Control.Applicative
 import Database.Persist (Filter)
 import qualified Database.Persist as DB
@@ -41,3 +39,4 @@ main :: IO ()
 main = execSqlite $ do
     runMigration migrateAll
     initNumPerAge
+    mapM_ DB.insert testDataPerson

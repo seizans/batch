@@ -1,7 +1,3 @@
-{-# LANGUAGE TypeFamilies, TemplateHaskell, FlexibleContexts, GADTs #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE QuasiQuotes #-}
-{-# LANGUAGE EmptyDataDecls #-}
 module Model where
 
 import Data.Text (Text)

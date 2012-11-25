@@ -16,10 +16,31 @@ build-type:          Simple
 cabal-version:       >=1.8
 
 library
-  -- exposed-modules:     
-  other-modules:       Main
+  exposed-modules:     Model
+
+  extensions:          TemplateHaskell
+                       QuasiQuotes
+                       OverloadedStrings
+                       MultiParamTypeClasses
+                       TypeFamilies
+                       GADTs
+                       GeneralizedNewtypeDeriving
+                       FlexibleContexts
+                       EmptyDataDecls
+                       NoMonomorphismRestriction
+
   build-depends:       base ==4.5.*
                      , persistent-template
                      , persistent-sqlite
                      , persistent
                      , text
+
+executable             batch
+  main-is:             ../Main.hs
+  hs-source-dirs:      dist
+  ghc-options:         -threaded -O2
+  extensions:          OverloadedStrings
+  build-depends:       base
+                     , batch
+                     , persistent-sqlite
+                     , persistent
