@@ -4,7 +4,7 @@
 
 module Model where
 
-import Data.Monoid (Monoid(..))
+import Data.Monoid
 import Data.Text (Text)
 import Database.Persist.Sqlite
 import Database.Persist.TH
@@ -29,6 +29,13 @@ data Sex = Male | Female
 data AgeArea = Over0 | Over20 | Over40 | Over60
   deriving (Show, Read, Eq, Ord, Enum, Bounded)
 
+intToAgeArea :: Int -> AgeArea
+intToAgeArea n
+    | n < 20 = Over0
+    | n < 40 = Over20
+    | n < 60 = Over40
+    | otherwise = Over60
+
 data AllNumPerAge = AllNumPerAge
     { over0Male :: Int
     , over0Female :: Int
@@ -50,6 +57,18 @@ instance Monoid AllNumPerAge where
         (over40Female x + over40Female y)
         (over60Male x   + over60Male y)
         (over60Female x + over60Female y)
+
+fromAllNumPerAge :: AllNumPerAge -> [NumPerAge]
+fromAllNumPerAge all
+    = NumPerAge Over0  Male   (over0Male    all)
+    : NumPerAge Over0  Female (over0Female  all)
+    : NumPerAge Over20 Male   (over20Male   all)
+    : NumPerAge Over20 Female (over20Female all)
+    : NumPerAge Over40 Male   (over40Male   all)
+    : NumPerAge Over40 Female (over40Female all)
+    : NumPerAge Over60 Male   (over60Male   all)
+    : NumPerAge Over60 Female (over60Female all)
+    : []
 
 derivePersistField "Sex"
 derivePersistField "AgeArea"
