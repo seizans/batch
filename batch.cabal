@@ -17,11 +17,12 @@ cabal-version:       >=1.8
 
 library
   exposed-modules:     Model
+                     , Logic.Categorize
 
   build-depends:       base ==4.5.*
                      , persistent-template
                      , persistent-sqlite
-                     , persistent
+                     , persistent             == 1.0.2.2
                      , text
 
 executable             batch
@@ -31,4 +32,28 @@ executable             batch
   build-depends:       base
                      , batch
                      , persistent-sqlite
-                     , persistent
+                     , persistent             == 1.0.2.2
+
+-- Test-Suite doctest
+--   Type:                exitcode-stdio-1.0
+--   HS-Source-Dirs:      test
+--   Ghc-Options:         -threaded -Wall
+--   Main-Is:             doctests.hs
+--   Build-Depends:       base
+--                      , doctest             >= 0.9.3
+--                      , persistent-sqlite
+--                      , persistent
+
+Test-Suite spec
+  Type:                exitcode-stdio-1.0
+  Hs-Source-Dirs:      test
+  Ghc-Options:         -Wall
+  Main-Is:             Spec.hs
+  Other-Modules:       CalcSpec
+  Build-Depends:       base
+                     , hspec                  >= 1.3
+                     , QuickCheck
+                     , batch
+                     , persistent-sqlite
+                     , persistent             == 1.0.2.2
+                     , text
