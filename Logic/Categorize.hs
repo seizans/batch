@@ -28,4 +28,3 @@ calculateNumPerAge xs = helper xs mempty
             Over20 -> acc { over20Female = 1 + over20Female acc }
             Over40 -> acc { over40Female = 1 + over40Female acc }
             Over60 -> acc { over60Female = 1 + over60Female acc }
-
