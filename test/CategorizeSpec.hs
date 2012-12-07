@@ -1,6 +1,8 @@
 {-# LANGUAGE FlexibleInstances #-}
 
-module CalcSpec where
+module CategorizeSpec
+    ( spec
+    ) where
 
 import Test.Hspec
 import Control.Monad
@@ -11,8 +13,32 @@ import Model
 import Logic.Categorize
 import qualified Data.Text as DT
 
+--------------------------------------------------------------------------
+
+spec :: Spec
+spec = do
+    describe "calculateNumPerAge" $ do
+        prop "input with Males" $ \xs ->
+            (over0Female $ calculateNumPerAge $ filterFemale xs) == 0
+        prop "input with Females" $ \xs ->
+            (over0Female $ calculateNumPerAge $ filterMale xs) == 0
+
+    describe "fromAllNumPerAge" $ do
+        prop "whole size should be the same" $ \x ->
+            (size x) == (numOfPerson $ fromAllNumPerAge x)
+    
+    describe "joint test" $ do
+        prop "whole size of person should be the same" $ \xs ->
+            (numOfPerson $ fromAllNumPerAge $ calculateNumPerAge xs)
+                == (length xs)
+
+--------------------------------------------------------------------------
+
 instance Arbitrary Person where
-    arbitrary = return Person `ap` (DT.pack <$> arbitrary) `ap` arbitrary `ap` arbitrary
+    arbitrary = return Person 
+        `ap` (DT.pack <$> arbitrary)
+        `ap` arbitrary
+        `ap` arbitrary
 
 instance Arbitrary Sex where
     arbitrary = elements [Male]
@@ -39,12 +65,10 @@ size x = (over0Male x)
     + (over60Female x)
 
 numOfPerson :: [NumPerAge] -> Int
-numOfPerson = foldr sum 0
+numOfPerson = foldr sum' 0
   where
-    sum :: NumPerAge -> Int -> Int
-    sum (NumPerAge _ _ x) y  = x + y
-
-prop_calculateNumPerAge = \xs -> (over0Female $ calculateNumPerAge xs) == 0
+    sum' :: NumPerAge -> Int -> Int
+    sum' (NumPerAge _ _ x) y  = x + y
 
 filterMale :: [Person] -> [Person]
 filterMale xs = [x | x <- xs, (personSex x) == Female]
@@ -52,14 +76,3 @@ filterMale xs = [x | x <- xs, (personSex x) == Female]
 filterFemale :: [Person] -> [Person]
 filterFemale xs = [x | x <- xs, (personSex x) == Male]
 
-spec :: Spec
-spec = do
-    describe "calculateNumPerAge" $ do
-        prop "input with Males" $ \xs ->
-            (over0Female $ calculateNumPerAge $ filterFemale xs) == 0
-        prop "input with Females" $ \xs ->
-            (over0Female $ calculateNumPerAge $ filterMale xs) == 0
-
-    describe "fromAllNumPerAge" $ do
-        prop "whole size should be the same" $ \x ->
-            (size x) == (numOfPerson $ fromAllNumPerAge x)
