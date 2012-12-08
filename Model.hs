@@ -46,6 +46,8 @@ data AllNumPerAge = AllNumPerAge
     , over60Male :: Int
     , over60Female :: Int
     }
+  deriving (Show, Eq, Ord)
+
 instance Monoid AllNumPerAge where
     mempty = AllNumPerAge 0 0 0 0 0 0 0 0
     mappend x y = AllNumPerAge
