@@ -6,5 +6,6 @@ cabal-dev
 *.chi
 *.chs.h
 .virthualenv
+.hpc
 
 *.sqlite3
