@@ -16,8 +16,9 @@ build-type:          Simple
 cabal-version:       >=1.8
 
 library
-  exposed-modules:     Model
-                     , Logic.Categorize
+  exposed-modules:     DbUtil
+                     , Model
+                     , Service
 
   build-depends:       base ==4.5.*
                      , persistent-template

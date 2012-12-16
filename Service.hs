@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Logic.Categorize
+module Service
     ( calculateNumPerAge
     ) where
 
